@@ -44,6 +44,8 @@ page = browser.new_page()
 
 page.goto("https://www.wanted.co.kr/search?query=flutter&tab=position")
 
+time.sleep(3)
+
 for x in range(4):
     page.keyboard.down("End")
     time.sleep(3)
@@ -76,11 +78,11 @@ for job in jobs:
     jobs_db.append(job)
 
 # CSV : Comma Separated Values
-file = open("./Python/jobs.csv", "w", encoding="UTF-8", newline="")
+file = open("./Python/9_jobs.csv", "w", encoding="UTF-8", newline="")
 writer = csv.writer(file)
 writer.writerow(["Title", "Company", "Location", "Reward", "Link"])
 
-# # Values from Dictionary
+# ### Values from Dictionary ###
 # a = {'a': 1, 'b': 2, 'c': 3}
 # a.values()  # >>> dict_values([1,2,3])
 # a.keys()    # >>> dict_keys(['a','b','c'])
@@ -89,3 +91,13 @@ for job in jobs_db:
     writer.writerow(job.values())
 
 file.close()
+
+
+### CODE CHALLENGE ###
+# function으로 묶기
+# input은 keyword
+# 모든 keyword에 대해 실행
+# 파일명은 flutterjobs, nextjsjobs,...
+# OOP 이용
+# gist.github.com / Code Challenge / main.py
+keywords = ["flutter", "nextjs", "kotlin"]
