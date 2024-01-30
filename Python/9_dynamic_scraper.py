@@ -87,3 +87,5 @@ writer.writerow(["Title", "Company", "Location", "Reward", "Link"])
 
 for job in jobs_db:
     writer.writerow(job.values())
+
+file.close()
