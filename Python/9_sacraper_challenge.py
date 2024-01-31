@@ -63,7 +63,7 @@ class Jobs:
 
     def make_csv(self):
         file = open(
-            f"./Python/10_{self.keyword}_jobs.csv", "w", encoding="UTF-8", newline=""
+            f"./Python/9_{self.keyword}_jobs.csv", "w", encoding="UTF-8", newline=""
         )
         writer = csv.writer(file)
         writer.writerow(["Title", "Company", "Location", "Reward", "Link"])

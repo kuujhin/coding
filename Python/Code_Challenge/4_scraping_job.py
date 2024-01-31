@@ -9,7 +9,7 @@ def scrape_page(url):
         url,
         headers={
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
+        },
     )
     soup = BeautifulSoup(response.text, "html.parser")
     jobs = soup.find_all("li", class_="bjs-jlid")
@@ -33,7 +33,7 @@ def scrape(url):
         url,
         headers={
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
+        },
     )
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -55,12 +55,7 @@ print(len(all_jobs))
 #     }
 # )
 
-skills = [
-    "python",
-    "typescript",
-    "javascript",
-    "rust"
-]
+skills = ["python", "typescript", "javascript", "rust"]
 
 for skill in skills:
     all_jobs = []

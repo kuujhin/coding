@@ -78,7 +78,7 @@ for job in jobs:
     jobs_db.append(job)
 
 # CSV : Comma Separated Values
-file = open("./Python/9_jobs.csv", "w", encoding="UTF-8", newline="")
+file = open("./Python/8_jobs.csv", "w", encoding="UTF-8", newline="")
 writer = csv.writer(file)
 writer.writerow(["Title", "Company", "Location", "Reward", "Link"])
 
