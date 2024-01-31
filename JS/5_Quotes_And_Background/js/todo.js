@@ -4,7 +4,7 @@ const toDoInput = toDoForm.querySelector("input");
 const toDoList = document.getElementById("todo-list");
 
 const TODOS_KEY = "todos";
-const toDos = [];
+let toDos = [];
 
 // // JS Object(array,...)를 String으로 바꾸는 기능
 // JSON.stringify({ name: "jhin" }); // >>> "{\"name\":\"nico\"}"
@@ -55,6 +55,8 @@ const savedToDos = localStorage.getItem(TODOS_KEY);
 
 if (savedToDos) {
   const parsedToDos = JSON.parse(savedToDos);
+  toDos = parsedToDos;
   // parsedToDos.forEach(sayHello);
-  parsedToDos.forEach((item) => console.log("hello", item));
+  // parsedToDos.forEach((item) => console.log("hello", item));
+  parsedToDos.forEach(paintToDo);
 }
