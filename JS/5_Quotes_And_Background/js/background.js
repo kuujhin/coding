@@ -23,3 +23,6 @@ bgImage.src = `img/${chosenImage}`;
 // bgImage.id = "bgimg";
 
 document.body.appendChild(bgImage);
+
+// // body 앞에 추가
+//document.body.prepend(bgImage);
