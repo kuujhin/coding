@@ -66,3 +66,13 @@ if (savedToDos) {
   // parsedToDos.forEach((item) => console.log("hello", item));
   parsedToDos.forEach(paintToDo);
 }
+
+// // Filter
+// function sexyFilter(item) {
+//   // 배열에서 유지시키고 싶다면 true 리턴
+//   // false 리턴시 배열에 포함되지 않음
+//   return item.id !== 1706702423279
+// }
+// const todos = [{text: "11", id: 1706702423279}, {text: "12", id: 1706702519464}]
+
+// todos.filter(sexyFilter) // >>>  [{text: "12", id: 1706702519464}]
