@@ -18,8 +18,9 @@ function saveToDos() {
 
 function deleteToDo(event) {
   const li = event.target.parentElement;
-  console.log(li.id);
   li.remove();
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+  saveToDos();
 }
 
 function paintToDo(newToDoObj) {
@@ -76,3 +77,6 @@ if (savedToDos) {
 // const todos = [{text: "11", id: 1706702423279}, {text: "12", id: 1706702519464}]
 
 // todos.filter(sexyFilter) // >>>  [{text: "12", id: 1706702519464}]
+
+// const arr = [1, 2, 3, 4];
+// const newArr = arr.filter(item => item > 2); // >>> [3,4]
