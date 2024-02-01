@@ -1,11 +1,15 @@
 import csv
 
 
-def save_to_file(file_name, jobs):
+def save_to_file(file_name, site, jobs):
     file = open(
-        f"./Python/Job_Scraper/file/{file_name}.csv", "w", encoding="UTF-8", newline=""
+        f"./Python/Job_Scraper/file/{file_name}_{site}.csv",
+        "w",
+        encoding="UTF-8",
+        newline="",
     )
     writer = csv.writer(file)
+
     writer.writerow(["Title", "Company", "Location", "Reward", "Link"])
 
     for job in jobs:

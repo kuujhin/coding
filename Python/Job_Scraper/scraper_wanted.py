@@ -6,11 +6,10 @@ from file import save_to_file
 
 
 class Job:
-    def __init__(self, title, company_name, location, reward, link):
+    def __init__(self, title, company_name, description, link):
         self.title = title
         self.company = company_name
-        self.location = location
-        self.reward = reward
+        self.description = description
         self.url = link
 
 
@@ -47,7 +46,8 @@ class Jobs_wanted:
             location = job.find("span", class_="JobCard_location__2EOr5").text
             reward = job.find("span", class_="JobCard_reward__sdyHn").text
 
-            job = Job(title, company_name, location, reward, link)
+            description = f"Location: {location}\nReward: {reward}"
+            job = Job(title, company_name, description, link)
 
             self.jobs.append(job)
 

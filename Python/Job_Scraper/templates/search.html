@@ -13,7 +13,9 @@
     <main class="container">
       <hgroup>
         <h1>Search Results for "{{keyword}}":</h1>
-        <a target="_blank" href="/export?keyword={{keyword}}">Export to File</a>
+        <a target="_blank" href="/export?keyword={{keyword}}&site={{site}}"
+          >Export to File</a
+        >
       </hgroup>
       <figure>
         <table role="grid">
@@ -21,8 +23,7 @@
             <tr>
               <th>Title</th>
               <th>Company</th>
-              <th>Location</th>
-              <th>Reward</th>
+              <th>Description</th>
               <th>Link</th>
             </tr>
           </thead>
@@ -31,8 +32,7 @@
             <tr>
               <td>{{job.title}}</td>
               <td>{{job.company}}</td>
-              <td>{{job.location}}</td>
-              <td>{{job.reward}}</td>
+              <td>{{job.description}}</td>
               <td><a href="{{job.url}}" target="_blank">Apply now&rarr;</a></td>
             </tr>
             {% endfor %}

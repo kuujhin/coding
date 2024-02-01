@@ -4,11 +4,10 @@ from file import save_to_file
 
 
 class Job:
-    def __init__(self, title, company_name, region, position, link):
+    def __init__(self, title, company_name, description, link):
         self.title = title
         self.company = company_name
-        self.location = region
-        self.position = position
+        self.description = description
         self.url = link
 
 
@@ -36,10 +35,11 @@ class Jobs_weworkremotely:
                 company = company.text
                 position = position.text
                 region = region.text
+                description = f"Region: {region}\n Position: {position}"
                 url = job.find("div", class_="tooltip").next_sibling["href"]
                 url = f"https://weworkremotely.com{url}"
 
-                job = Job(title, company, region, position, url)
+                job = Job(title, company, description, url)
 
                 self.jobs.append(job)
 

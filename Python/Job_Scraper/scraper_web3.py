@@ -4,10 +4,10 @@ from file import save_to_file
 
 
 class Job:
-    def __init__(self, title, company_name, location, link):
+    def __init__(self, title, company_name, description, link):
         self.title = title
         self.company = company_name
-        self.location = location
+        self.description = description
         self.url = link
 
 
@@ -46,9 +46,10 @@ class Jobs_web3:
                 location = f"{l.text} {location}"
             if location == "":
                 location = "Remote"
+            description = f"Location: {location}"
             url = f"https://web3.career{url}"
 
-            job = Job(title, company_name, location, url)
+            job = Job(title, company_name, description, url)
 
             self.jobs.append(job)
 
