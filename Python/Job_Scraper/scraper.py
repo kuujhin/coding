@@ -26,3 +26,25 @@ def scrape(keyword, site):
         return scrape_from_scraper(keyword, db_web3, scrape_web3)
     if site == "wanted":
         return scrape_from_scraper(keyword, db_wanted, scrape_wanted)
+
+
+def update_from_scraper(keyword, db, f):
+    jobs_db = Jobs(keyword)
+    jobs_db.get_content(f)
+    jobs = jobs_db.jobs
+    db[keyword] = jobs
+    return jobs
+
+
+def rescrape(keyword, site):
+    if site == "berlinstartupjobs":
+        db_berlinstartupjobs.pop(keyword)
+        return update_from_scraper(
+            keyword, db_berlinstartupjobs, scrape_berlinstartupjobs
+        )
+    if site == "weworkremotely":
+        return update_from_scraper(keyword, db_weworkremotely, scrape_weworkremotely)
+    if site == "web3":
+        return update_from_scraper(keyword, db_web3, scrape_web3)
+    if site == "wanted":
+        return update_from_scraper(keyword, db_wanted, scrape_wanted)

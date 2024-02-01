@@ -8,8 +8,6 @@ db_weworkremotely = {}
 db_web3 = {}
 db_wanted = {}
 
-jobs = []
-
 
 def get_from_db():
     os.chdir("C:/Users/kdoub/Desktop/coding/Python/Job_Scraper/file")
@@ -21,6 +19,8 @@ def get_from_db():
 
 
 def read_from_file(keyword, site):
+    jobs = []
+
     file = open(
         f"{keyword}_{site}.csv",
         "r",
@@ -32,31 +32,31 @@ def read_from_file(keyword, site):
     if site == "berlinstartupjobs":
         for row in reader:
             title, company, description, link = row
-
+            if title == "Title":
+                continue
             jobs.append(Job(title, company, description, link))
-
         db_berlinstartupjobs[keyword] = jobs
 
-    if site == "weworkremotely":
+    elif site == "weworkremotely":
         for row in reader:
             title, company, description, link = row
-
+            if title == "Title":
+                continue
             jobs.append(Job(title, company, description, link))
-
         db_weworkremotely[keyword] = jobs
 
-    if site == "web3":
+    elif site == "web3":
         for row in reader:
             title, company, description, link = row
-
+            if title == "Title":
+                continue
             jobs.append(Job(title, company, description, link))
-
         db_web3[keyword] = jobs
 
-    if site == "wanted":
+    elif site == "wanted":
         for row in reader:
             title, company, description, link = row
-
+            if title == "Title":
+                continue
             jobs.append(Job(title, company, description, link))
-
         db_wanted[keyword] = jobs

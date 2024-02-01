@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, send_file
 from file import save_to_file, keyword_db
-from scraper import scrape
+from scraper import scrape, rescrape
 from db import get_from_db
 
 app = Flask(__name__)
@@ -21,6 +21,20 @@ def search():
         return redirect("/")
 
     jobs = scrape(keyword, site)
+
+    return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
+
+
+@app.route("/update")
+def update():
+    keyword = request.args.get("keyword")
+    site = request.args.get("site")
+
+    if keyword == None:
+        return redirect("/")
+
+    jobs = rescrape(keyword, site)
+    print(keyword, site, jobs)
 
     return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
 
