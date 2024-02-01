@@ -1,14 +1,14 @@
 from flask import Flask, render_template, request, redirect, send_file
 from file import save_to_file, keyword_db
 from scraper import scrape
-from static_scraper import scrape_berlinstartupjobs, scrape_weworkremotely, scrape_web3
-from dynamic_scraper import scrape_wanted
+from db import get_from_db
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def home():
+    get_from_db()
     return render_template("home.html", name="jhin")
 
 
