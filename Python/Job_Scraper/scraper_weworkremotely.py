@@ -35,7 +35,7 @@ class Jobs_weworkremotely:
                 company = company.text
                 position = position.text
                 region = region.text
-                description = f"Region: {region}\n Position: {position}"
+                description = f"Region: {region}\nPosition: {position}"
                 url = job.find("div", class_="tooltip").next_sibling["href"]
                 url = f"https://weworkremotely.com{url}"
 

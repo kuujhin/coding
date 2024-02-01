@@ -10,9 +10,9 @@ def save_to_file(file_name, site, jobs):
     )
     writer = csv.writer(file)
 
-    writer.writerow(["Title", "Company", "Location", "Reward", "Link"])
+    writer.writerow(["Title", "Company", "Description", "Link"])
 
     for job in jobs:
-        writer.writerow([job.title, job.company, job.location, job.reward, job.url])
+        writer.writerow([job.title, job.company, job.description, job.url])
 
     file.close()

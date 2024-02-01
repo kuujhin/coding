@@ -11,6 +11,7 @@ app = Flask(__name__)
 db_berlinstartupjobs = {}
 db_weworkremotely = {}
 db_web3 = {}
+db_wanted = {}
 
 
 @app.route("/")
@@ -35,6 +36,9 @@ def search():
     if site == "web3":
         jobs = scrape_page(keyword, db_web3, Jobs_web3)
 
+    if site == "wanted":
+        jobs = scrape_page(keyword, db_wanted, Jobs_wanted)
+
     return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
 
 
@@ -49,6 +53,8 @@ def export():
         db = db_weworkremotely
     if site == "web3":
         db = db_web3
+    if site == "wanted":
+        db = db_wanted
 
     if keyword == None:
         return redirect("/")
