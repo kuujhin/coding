@@ -34,7 +34,6 @@ def update():
         return redirect("/")
 
     jobs = rescrape(keyword, site)
-    print(keyword, site, jobs)
 
     return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
 
