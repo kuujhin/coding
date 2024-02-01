@@ -1,17 +1,11 @@
 from flask import Flask, render_template, request, redirect, send_file
-from scraper_wanted import Jobs_wanted
-from scraper_weworkremotely import Jobs_weworkremotely
-from scraper_berlinstartupjobs import Jobs_berlinstartupjobs
-from scraper_web3 import Jobs_web3
 from file import save_to_file
-from scraper import scrape_page
+from scraper import scrape
+from static_scraper import scrape_berlinstartupjobs, scrape_weworkremotely, scrape_web3
+from dynamic_scraper import scrape_wanted
+from db import db_weworkremotely, db_berlinstartupjobs, db_wanted, db_web3
 
 app = Flask(__name__)
-
-db_berlinstartupjobs = {}
-db_weworkremotely = {}
-db_web3 = {}
-db_wanted = {}
 
 
 @app.route("/")
@@ -27,17 +21,7 @@ def search():
     if keyword == None:
         return redirect("/")
 
-    if site == "berlinstartupjobs":
-        jobs = scrape_page(keyword, db_berlinstartupjobs, Jobs_berlinstartupjobs)
-
-    if site == "weworkremotely":
-        jobs = scrape_page(keyword, db_weworkremotely, Jobs_weworkremotely)
-
-    if site == "web3":
-        jobs = scrape_page(keyword, db_web3, Jobs_web3)
-
-    if site == "wanted":
-        jobs = scrape_page(keyword, db_wanted, Jobs_wanted)
+    jobs = scrape(keyword, site)
 
     return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
 
@@ -46,6 +30,9 @@ def search():
 def export():
     keyword = request.args.get("keyword")
     site = request.args.get("site")
+
+    if keyword == None:
+        return redirect("/")
 
     if site == "berlinstartupjobs":
         db = db_berlinstartupjobs
@@ -56,8 +43,6 @@ def export():
     if site == "wanted":
         db = db_wanted
 
-    if keyword == None:
-        return redirect("/")
     if keyword not in db:
         return redirect(f"/search?keyword={keyword}")
     save_to_file(keyword, site, db[keyword])
