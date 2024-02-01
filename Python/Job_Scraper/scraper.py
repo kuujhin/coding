@@ -57,8 +57,8 @@ class Jobs:
         save_to_file(self.keyword, self.jobs)
 
 
-for keyword in keywords:
-    jobs_db = Jobs(keyword)
-    jobs_db.get_content()
-    jobs_db.scrape_page()
-    jobs_db.make_csv()
+# for keyword in keywords:
+#     jobs_db = Jobs(keyword)
+#     jobs_db.get_content()
+#     jobs_db.scrape_page()
+#     jobs_db.make_csv()

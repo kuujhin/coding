@@ -3,7 +3,7 @@ import csv
 
 def save_to_file(file_name, jobs):
     file = open(
-        f"./Python/Job_Scraper/{file_name}.csv", "w", encoding="UTF-8", newline=""
+        f"./Python/Job_Scraper/file/{file_name}.csv", "w", encoding="UTF-8", newline=""
     )
     writer = csv.writer(file)
     writer.writerow(["Title", "Company", "Location", "Reward", "Link"])
