@@ -4,8 +4,6 @@ from bs4 import BeautifulSoup
 import csv
 from file import save_to_file
 
-keywords = ["flutter", "nextjs", "kotlin"]
-
 
 class Job:
     def __init__(self, title, company_name, location, reward, link):
@@ -16,7 +14,7 @@ class Job:
         self.url = link
 
 
-class Jobs:
+class Jobs_wanted:
     def __init__(self, keyword):
         self.keyword = keyword
         self.jobs = []
@@ -55,10 +53,3 @@ class Jobs:
 
     def make_csv(self):
         save_to_file(self.keyword, self.jobs)
-
-
-# for keyword in keywords:
-#     jobs_db = Jobs(keyword)
-#     jobs_db.get_content()
-#     jobs_db.scrape_page()
-#     jobs_db.make_csv()

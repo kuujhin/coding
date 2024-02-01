@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, send_file
-from scraper import Jobs
+from scraper_wanted import Jobs_wanted
+from scraper_weworkremotely import Jobs_weworkremotely
+from scraper_berlinstartupjobs import Jobs_berlinstartupjobs
+from scraper_web3 import Jobs_web3
 from file import save_to_file
 
 app = Flask(__name__)
@@ -20,12 +23,12 @@ def search():
     if keyword in db:
         jobs = db[keyword]
     else:
-        jobs_db = Jobs(keyword)
+        jobs_db = Jobs_web3(keyword)
         jobs_db.get_content()
         jobs_db.scrape_page()
         jobs = jobs_db.jobs
         db[keyword] = jobs
-    return render_template("search.html", keyword=keyword, jobs=jobs)
+    return render_template("search_web3.html", keyword=keyword, jobs=jobs)
 
 
 @app.route("/export")
