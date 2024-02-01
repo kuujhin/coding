@@ -1,2 +1,5 @@
 # api_key 선언 파일
 api.js
+
+#Python/Job_Scraper python 가상환경
+venv
