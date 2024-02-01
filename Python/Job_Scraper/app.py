@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, send_file
-from file import save_to_file
+from file import save_to_file, keyword_db
 from scraper import scrape
 from static_scraper import scrape_berlinstartupjobs, scrape_weworkremotely, scrape_web3
 from dynamic_scraper import scrape_wanted
-from db import db_weworkremotely, db_berlinstartupjobs, db_wanted, db_web3
 
 app = Flask(__name__)
 
@@ -34,18 +33,13 @@ def export():
     if keyword == None:
         return redirect("/")
 
-    if site == "berlinstartupjobs":
-        db = db_berlinstartupjobs
-    if site == "weworkremotely":
-        db = db_weworkremotely
-    if site == "web3":
-        db = db_web3
-    if site == "wanted":
-        db = db_wanted
+    db = keyword_db(site)
 
     if keyword not in db:
         return redirect(f"/search?keyword={keyword}")
+
     save_to_file(keyword, site, db[keyword])
+
     return send_file(f"./file/{keyword}_{site}.csv", as_attachment=True)
 
 
