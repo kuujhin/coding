@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, send_file
 from file import save_to_file, keyword_db
 from scraper import scrape, rescrape
-from db import get_from_db
+from db import get_from_db, search_file
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     get_from_db()
-    return render_template("home.html", name="jhin")
+    file_list = search_file()
+    return render_template("home.html", name="jhin", files=file_list)
 
 
 @app.route("/search")
@@ -22,7 +23,10 @@ def search():
 
     jobs = scrape(keyword, site)
 
-    return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
+    if jobs == []:
+        return render_template(f"search_empty.html", keyword=keyword, site=site)
+    else:
+        return render_template(f"search.html", keyword=keyword, site=site, jobs=jobs)
 
 
 @app.route("/update")
@@ -54,6 +58,12 @@ def export():
     save_to_file(keyword, site, db[keyword])
 
     return send_file(f"./file/{keyword}_{site}.csv", as_attachment=True)
+
+
+@app.route("/updates")
+def updates():
+
+    return render_template("updates.html")
 
 
 app.run("0.0.0.0", debug=True)

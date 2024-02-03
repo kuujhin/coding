@@ -1,10 +1,13 @@
 import csv
+import os
 from db import db_berlinstartupjobs, db_wanted, db_web3, db_weworkremotely
 
 
 def save_to_file(file_name, site, jobs):
+    os.chdir("C:/Users/kdoub/Desktop/coding/Python/Job_Scraper/file")
+
     file = open(
-        f"./Python/Job_Scraper/file/{file_name}_{site}.csv",
+        f"{file_name}_{site}.csv",
         "w",
         encoding="UTF-8",
         newline="",
