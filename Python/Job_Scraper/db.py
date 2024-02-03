@@ -1,5 +1,6 @@
 import csv
 import os
+import time
 
 from job import Job
 
@@ -9,6 +10,19 @@ db_web3 = {}
 db_wanted = {}
 
 
+def search_file():
+    file_list = []
+    os.chdir("C:/Users/kdoub/Desktop/coding/Python/Job_Scraper/file")
+    files = os.listdir()
+    for file in files:
+        file_name = os.path.splitext(file)[0]
+        keyword, site = file_name.split("_")
+        modification_time = time.localtime(os.path.getmtime(file))
+        modification_time = time.strftime("%Y-%m-%d %H:%M:%S", modification_time)
+        file_list.append([keyword, site, modification_time])
+    return file_list
+
+
 def get_from_db():
     os.chdir("C:/Users/kdoub/Desktop/coding/Python/Job_Scraper/file")
     files = os.listdir()
@@ -16,6 +30,17 @@ def get_from_db():
         filename = os.path.splitext(file)[0]
         keyword, site = filename.split("_")
         read_from_file(keyword, site)
+
+
+def put_data_from_csv(reader):
+    jobs = []
+
+    for row in reader:
+        title, company, description, link = row
+        if title == "Title":
+            continue
+        jobs.append(Job(title, company, description, link))
+    return jobs
 
 
 def read_from_file(keyword, site):
@@ -30,33 +55,13 @@ def read_from_file(keyword, site):
     reader = csv.reader(file)
 
     if site == "berlinstartupjobs":
-        for row in reader:
-            title, company, description, link = row
-            if title == "Title":
-                continue
-            jobs.append(Job(title, company, description, link))
-        db_berlinstartupjobs[keyword] = jobs
+        db_berlinstartupjobs[keyword] = put_data_from_csv(reader)
 
     elif site == "weworkremotely":
-        for row in reader:
-            title, company, description, link = row
-            if title == "Title":
-                continue
-            jobs.append(Job(title, company, description, link))
-        db_weworkremotely[keyword] = jobs
+        db_weworkremotely[keyword] = put_data_from_csv(reader)
 
     elif site == "web3":
-        for row in reader:
-            title, company, description, link = row
-            if title == "Title":
-                continue
-            jobs.append(Job(title, company, description, link))
-        db_web3[keyword] = jobs
+        db_web3[keyword] = put_data_from_csv(reader)
 
     elif site == "wanted":
-        for row in reader:
-            title, company, description, link = row
-            if title == "Title":
-                continue
-            jobs.append(Job(title, company, description, link))
-        db_wanted[keyword] = jobs
+        db_wanted[keyword] = put_data_from_csv(reader)
