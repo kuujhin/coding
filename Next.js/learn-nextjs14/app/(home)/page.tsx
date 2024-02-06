@@ -6,13 +6,13 @@ export const metadata = {
   title: "Home",
 };
 
-const URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
+export const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
 
 async function getMovies() {
   //로딩 상태를 확인하기 위해 기다리는 코드
   await new Promise((resolve) => setTimeout(resolve, 1000));
   // fetch(URL).then((response) => response.json());
-  const response = await fetch(URL);
+  const response = await fetch(API_URL);
   const json = await response.json();
   return json;
 }
