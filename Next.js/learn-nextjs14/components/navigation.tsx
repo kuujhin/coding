@@ -14,6 +14,9 @@
 // Hydration         normal HTML                       React Application
 // /about-us ---> <button>0</button> ---> :) ---> <button onClick={}></button>
 
+//use-client가 없는 컴포넌트들은 hydrate되지 않음. 그럴 필요가 없기 때문 => Server Component
+//client에서 interactive해야하는 컴포넌트들은 use-client를 통해 hydrate 시켜야함
+//use client의 의미: Render at backend, Hydrate&Interactive at frontend
 "use client";
 
 import Link from "next/link";
