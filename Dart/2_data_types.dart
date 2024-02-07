@@ -7,6 +7,11 @@ void main() {
   // num은 integer double 모두 가능
   num x = 12;
   x = 1.1;
+  print(name +
+      alive.toString() +
+      age.toString() +
+      money.toString() +
+      x.toString());
 
   /////////// 2. Lists ///////////
   var numbers = [1, 2, 3, 4];
@@ -20,7 +25,7 @@ void main() {
     // collection if
     if (giveMeFive) 5, // === if(giveMeFive){ nums.add(5); }
   ];
-  print(nums);
+  print(numbers + nums);
   // String은 추가 안됨. int 타입만 받음
   // numbers.add("1");  //에러
   // numbers.add(1);    //가능
@@ -65,6 +70,10 @@ void main() {
     {'name': 'jhin', 'xp': 9.99},
     {'name': 'nico', 'xp': 5}
   ];
+  print(player);
+  print(myplayer);
+  print(mymap);
+  print(players);
 
   /////////// 6. Sets ///////////
   var setnumbers = {1, 2, 3, 4};
@@ -73,4 +82,5 @@ void main() {
   mynumbers.add(1);
   print(mynumbers); // === {1,2,3,4}
   // set의 요소는 unique 함
+  print(setnumbers);
 }
