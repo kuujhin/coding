@@ -65,7 +65,7 @@ void main3() {
   print(sayHello31('jhin', 12));
 }
 
-/////////// 3. QQ Operator ///////////
+/////////// 4. QQ Operator ///////////
 String capitalizeName1(String? name) {
   if (name != null) {
     return name.toUpperCase();
@@ -81,7 +81,8 @@ String capitalizeName2(String? name) =>
 // left가 null 이라면 right를 return
 // left가 null 이 아니라면 left를 return
 String capitalizeName3(String? name) => name?.toUpperCase() ?? 'ANON';
-void main() {
+
+void main4() {
   capitalizeName3('jhin');
   capitalizeName3(null);
 
@@ -90,4 +91,24 @@ void main() {
   name = null;
   name ??= 'jhin';
   print(name);
+}
+
+/////////// 5. Typedef ///////////
+typedef ListOfInts = List<int>;
+
+ListOfInts reverseListOfNumbers(ListOfInts list) {
+  var reversed = list.reversed;
+  return reversed.toList();
+}
+
+typedef UserInfo = Map<String, String>;
+
+String sayHi(UserInfo userInfo) {
+  return "Hi ${userInfo['name']}";
+}
+
+void main() {
+  print(reverseListOfNumbers([1, 2, 3]));
+  print(sayHi({'name': 'nico'}));
+  print(sayHi({'asdfadsf': 'nico'}));
 }
