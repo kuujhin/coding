@@ -56,11 +56,38 @@ void main2() {
   print(sayHello23(name: 'kuu', age: 44, country: 'Japan'));
 }
 
-/////////// 2. Optional Positional Parameters ///////////
+/////////// 3. Optional Positional Parameters ///////////
 // country는 required 하지 않고 default value가 주어진다
 String sayHello31(String name, int age, [String? country = 'cuba']) =>
     'Hello $name, you are $age years old from $country';
 
 void main3() {
   print(sayHello31('jhin', 12));
+}
+
+/////////// 3. QQ Operator ///////////
+String capitalizeName1(String? name) {
+  if (name != null) {
+    return name.toUpperCase();
+  }
+  return 'ANON';
+}
+
+String capitalizeName2(String? name) =>
+    name != null ? name.toUpperCase() : 'ANON';
+
+// Question Question Operator (??)
+// left ?? right
+// left가 null 이라면 right를 return
+// left가 null 이 아니라면 left를 return
+String capitalizeName3(String? name) => name?.toUpperCase() ?? 'ANON';
+void main() {
+  capitalizeName3('jhin');
+  capitalizeName3(null);
+
+  String? name;
+  name ??= 'nico';
+  name = null;
+  name ??= 'jhin';
+  print(name);
 }
