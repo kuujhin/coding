@@ -129,7 +129,7 @@ void main4() {
 }
 
 //////////////////////////////////////
-////// 4. Named Constructors 2 ///////
+////// 5. Named Constructors 2 ///////
 //////////////////////////////////////
 class Player5 {
   final String name;
@@ -146,7 +146,7 @@ class Player5 {
   }
 }
 
-void main() {
+void main5() {
   var apiData = [
     {'name': 'jhin', 'team': 'red', 'xp': 0},
     {'name': 'nico', 'team': 'red', 'xp': 0},
@@ -156,4 +156,45 @@ void main() {
     var player = Player5.fromJson(playerJson);
     player.sayHello();
   });
+}
+
+//////////////////////////////////////
+//////// 6. Cascade Notation /////////
+//////////////////////////////////////
+class Player6 {
+  String name;
+  int xp;
+  String team;
+
+  Player6({
+    required this.name,
+    required this.xp,
+    required this.team,
+  });
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+void main() {
+  var jhin = Player6(name: 'jhin', xp: 1200, team: 'red');
+  jhin.name = 'lalala';
+  jhin.xp = 2500;
+  jhin.team = 'blue';
+
+  //cascade operator
+  var nico = Player6(name: 'nico', xp: 1200, team: 'red')
+    ..name = 'lalala'
+    ..xp = 2500
+    ..team = 'blue';
+  nico.sayHello();
+
+  var khen = Player6(name: 'khen', xp: 1200, team: 'red');
+  var potato = khen
+    ..name = 'lala'
+    ..xp = 12000
+    ..team = 'blue'
+    ..sayHello();
+  potato.sayHello();
 }
