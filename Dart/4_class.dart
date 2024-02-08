@@ -255,9 +255,46 @@ class Player8 extends Human {
   }
 }
 
-void main() {
+void main8() {
   var jhin = Player8(name: 'jhin', team: Team.red)
     ..name = 'kuujhin'
     ..team = Team.blue;
   jhin.walk();
+}
+
+//////////////////////////////////////
+////////// 9. Inheriatance ///////////
+//////////////////////////////////////
+class Human9 {
+  final String name;
+//  Human(this.name);
+  Human9({required this.name});
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+class Player9 extends Human9 {
+  final Team team;
+
+  Player9({
+    required this.team,
+    required String name,
+//  }) : super(name);
+  }) : super(name: name);
+
+  @override
+  void sayHello() {
+    super.sayHello();
+    print('and I play for ${team.name}');
+  }
+}
+
+void main() {
+  var jhin = Player9(
+    team: Team.red,
+    name: 'jhin',
+  );
+  print(jhin.team);
+  jhin.sayHello();
 }
