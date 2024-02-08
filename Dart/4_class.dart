@@ -222,10 +222,42 @@ class Player7 {
   }
 }
 
-void main() {
+void main7() {
   var jhin = Player7(name: 'jhin', xp: XPLevel.beginner, team: Team.red)
     ..name = 'kuujhin'
     ..xp = XPLevel.pro
     ..team = Team.blue;
   jhin.sayHello();
+}
+
+//////////////////////////////////////
+///////// 8. Abstract Classes/////////
+//////////////////////////////////////
+abstract class Human {
+  void walk();
+}
+
+class Player8 extends Human {
+  String name;
+  Team team;
+
+  Player8({
+    required this.name,
+    required this.team,
+  });
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+
+  void walk() {
+    print("I'm walking");
+  }
+}
+
+void main() {
+  var jhin = Player8(name: 'jhin', team: Team.red)
+    ..name = 'kuujhin'
+    ..team = Team.blue;
+  jhin.walk();
 }
