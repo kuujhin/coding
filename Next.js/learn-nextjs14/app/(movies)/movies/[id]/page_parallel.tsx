@@ -1,6 +1,6 @@
 // /movie/:id 로 이동시 보여주는 컴포넌트
 
-import { API_URL } from "../../../(home)/page";
+import { API_URL } from "../../../constants";
 
 async function getMovie(id: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
