@@ -177,7 +177,7 @@ class Player6 {
   }
 }
 
-void main() {
+void main6() {
   var jhin = Player6(name: 'jhin', xp: 1200, team: 'red');
   jhin.name = 'lalala';
   jhin.xp = 2500;
@@ -197,4 +197,35 @@ void main() {
     ..team = 'blue'
     ..sayHello();
   potato.sayHello();
+}
+
+//////////////////////////////////////
+////////////// 7. Enums///////////////
+//////////////////////////////////////
+enum Team { red, blue }
+
+enum XPLevel { beginner, medium, pro }
+
+class Player7 {
+  String name;
+  XPLevel xp;
+  Team team;
+
+  Player7({
+    required this.name,
+    required this.xp,
+    required this.team,
+  });
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+void main() {
+  var jhin = Player7(name: 'jhin', xp: XPLevel.beginner, team: Team.red)
+    ..name = 'kuujhin'
+    ..xp = XPLevel.pro
+    ..team = Team.blue;
+  jhin.sayHello();
 }
