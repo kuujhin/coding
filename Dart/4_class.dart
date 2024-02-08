@@ -290,11 +290,45 @@ class Player9 extends Human9 {
   }
 }
 
-void main() {
+void main9() {
   var jhin = Player9(
     team: Team.red,
     name: 'jhin',
   );
   print(jhin.team);
   jhin.sayHello();
+}
+
+//////////////////////////////////////
+///////////// 10. Mixins /////////////
+//////////////////////////////////////
+mixin class Strong {
+  final double strengthLevel = 1500.99;
+}
+
+mixin class QuickRunner {
+  void runQuick() {
+    print("ruuuun!");
+  }
+}
+
+mixin class Tall {
+  final double height = 1.99;
+}
+
+class Player10 with Strong, QuickRunner, Tall {
+  final Team team;
+  final String name;
+
+  Player10({required this.team, required this.name});
+}
+
+class Horse with Strong {}
+
+void main() {
+  var jhin = Player10(
+    team: Team.red,
+    name: 'jhin',
+  );
+  jhin.runQuick();
 }
