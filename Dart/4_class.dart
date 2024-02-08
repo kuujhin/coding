@@ -70,13 +70,60 @@ class Player3 {
   }
 }
 
-void main() {
-  // var player1 = Player3('jhin', 1500, 'red', 12);
-  var player1 = Player3(
+void main3() {
+  // var player = Player3('jhin', 1500, 'red', 12);
+  var player = Player3(
     name: "jhin",
     xp: 1200,
     team: 'blue',
     age: 21,
   );
+  player.sayHello();
+}
+
+//////////////////////////////////////
+/////// 4. Named Constructors ////////
+//////////////////////////////////////
+class Player4 {
+  final String name;
+  int xp, age;
+  String team;
+
+  Player4({
+    required this.name,
+    required this.xp,
+    required this.team,
+    required this.age,
+  });
+
+  Player4.createBluePlayer({
+    required String name,
+    required int age,
+  })  : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+
+  Player4.createRedPlayer(String name, int age)
+      : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+void main() {
+  var player1 = Player4.createBluePlayer(
+    name: "jhin",
+    age: 21,
+  );
+  var player2 = Player4.createRedPlayer(
+    'nico',
+    24,
+  );
   player1.sayHello();
+  player2.sayHello();
 }
