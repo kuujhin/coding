@@ -40,6 +40,7 @@ wss.on("connection", (socket) => {
           .forEach((aSocket) =>
             aSocket.send(`${socket.nickname}: ${parsedMessage.payload}`)
           );
+        socket.send(`You(${socket.nickname}): ${parsedMessage.payload}`);
         break;
       case "nickname":
         socket["nickname"] = parsedMessage.payload;

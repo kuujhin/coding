@@ -32,9 +32,9 @@ function handleSubmit(event) {
   const input = messageForm.querySelector("input");
   // console.log(input.value);
   socket.send(makeMessage("new_message", input.value));
-  const li = document.createElement("li");
-  li.innerText = `You: ${input.value}`;
-  messageList.append(li);
+  // const li = document.createElement("li");
+  // li.innerText = `You: ${input.value}`;
+  // messageList.append(li);
   input.value = "";
 }
 
