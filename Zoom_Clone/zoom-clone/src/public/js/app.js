@@ -84,16 +84,21 @@ socket.on("bye", (user, newCount) => {
   addMessage(`${user} Left!`);
 });
 
-socket.on("room_change", (rooms) => {
+socket.on("room_change", ([rooms, size]) => {
   const roomList = welcome.querySelector("ul");
   roomList.innerHTML = "";
 
   if (rooms.length === 0) {
     return;
   }
-  rooms.forEach((room) => {
+  for (i = 0; i < rooms.length; i++) {
     const li = document.createElement("li");
-    li.innerText = room;
+    li.innerText = `${rooms[i]} (${size[i]})`;
     roomList.append(li);
-  });
+  }
+  // rooms.forEach((room) => {
+  //   const li = document.createElement("li");
+  //   li.innerText = room;
+  //   roomList.append(li);
+  // });
 });
