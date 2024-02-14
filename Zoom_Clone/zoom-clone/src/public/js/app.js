@@ -18,7 +18,8 @@ function addMessage(msg) {
 
 function deleteMessage() {
   const ul = room.querySelector("ul");
-  while (ul.hasChildNodes()) ul.removeChild(ul.firstChild);
+  ul.innerHTML = "";
+  // while (ul.hasChildNodes()) ul.removeChild(ul.firstChild);
 }
 
 function handleMessageSubmit(event) {
@@ -74,3 +75,17 @@ socket.on("welcome", (user) => addMessage(`${user} Joined!`));
 socket.on("new_message", addMessage);
 
 socket.on("bye", (user) => addMessage(`${user} Left!`));
+
+socket.on("room_change", (rooms) => {
+  const roomList = welcome.querySelector("ul");
+  roomList.innerHTML = "";
+
+  if (rooms.length === 0) {
+    return;
+  }
+  rooms.forEach((room) => {
+    const li = document.createElement("li");
+    li.innerText = room;
+    roomList.append(li);
+  });
+});
