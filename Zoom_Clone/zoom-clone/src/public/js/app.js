@@ -70,11 +70,19 @@ form.addEventListener("submit", handleRoomSubmit);
 
 left.addEventListener("click", handleRoomLeft);
 
-socket.on("welcome", (user) => addMessage(`${user} Joined!`));
+socket.on("welcome", (user, newCount) => {
+  const h3 = room.querySelector("h3");
+  h3.innerText = `Room ${roomName} (${newCount})`;
+  addMessage(`${user} Joined!`);
+});
 
 socket.on("new_message", addMessage);
 
-socket.on("bye", (user) => addMessage(`${user} Left!`));
+socket.on("bye", (user, newCount) => {
+  const h3 = room.querySelector("h3");
+  h3.innerText = `Room ${roomName} (${newCount})`;
+  addMessage(`${user} Left!`);
+});
 
 socket.on("room_change", (rooms) => {
   const roomList = welcome.querySelector("ul");
