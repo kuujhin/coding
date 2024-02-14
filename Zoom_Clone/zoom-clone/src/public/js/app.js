@@ -1,49 +1,26 @@
-const messageList = document.querySelector("ul");
-const nicknameForm = document.querySelector("#nickname");
-const messageForm = document.querySelector("#message");
-const socket = new WebSocket(`ws://${window.location.host}`);
+const socket = io();
 
-function makeMessage(type, payload) {
-  const msg = { type, payload };
-  return JSON.stringify(msg);
+const welcome = document.getElementById("welcome");
+const form = welcome.querySelector("form");
+const room = document.getElementById("room");
+
+room.hidden = true;
+
+let roomName;
+
+function showRoom() {
+  welcome.hidden = true;
+  room.hidden = false;
+  const h3 = room.querySelector("h3");
+  h3.innerText = `Room ${roomName}`;
 }
 
-socket.addEventListener("open", () => {
-  console.log("Connected to Server ✅");
-});
-
-socket.addEventListener("message", (message) => {
-  // console.log("New message: ", message.data, " from the Server");
-  const li = document.createElement("li");
-  li.innerText = message.data;
-  messageList.append(li);
-});
-
-socket.addEventListener("close", () => {
-  console.log("Disconnected from Server ❌");
-});
-
-// setTimeout(() => {
-//   socket.send("hello from the browser!");
-// }, 5000);
-
-function handleSubmit(event) {
+function handleRoomSubmit(event) {
   event.preventDefault();
-  const input = messageForm.querySelector("input");
-  // console.log(input.value);
-  socket.send(makeMessage("new_message", input.value));
-  // const li = document.createElement("li");
-  // li.innerText = `You: ${input.value}`;
-  // messageList.append(li);
+  const input = form.querySelector("input");
+  socket.emit("enter_room", input.value, showRoom);
+  roomName = input.value;
   input.value = "";
 }
 
-function handleNickSubmit(event) {
-  event.preventDefault();
-  const input = nicknameForm.querySelector("input");
-  socket.send(makeMessage("nickname", input.value));
-  input.value = "";
-}
-
-messageForm.addEventListener("submit", handleSubmit);
-nicknameForm.addEventListener("submit", handleNickSubmit);
+form.addEventListener("submit", handleRoomSubmit);
