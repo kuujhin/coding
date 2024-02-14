@@ -40,11 +40,11 @@ function handleMessageSubmit(event) {
 //   input.value = "";
 // }
 
-function showRoom() {
+function showRoom(count) {
   welcome.hidden = true;
   room.hidden = false;
   const h3 = room.querySelector("h3");
-  h3.innerText = `Room ${roomName}`;
+  h3.innerText = `Room ${roomName} (${count})`;
   const msgForm = room.querySelector("#msg");
   msgForm.addEventListener("submit", handleMessageSubmit);
 }
