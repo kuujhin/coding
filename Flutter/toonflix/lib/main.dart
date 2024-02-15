@@ -50,7 +50,7 @@ class App extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 120,
+                height: 80,
               ),
               Text(
                 'Total Balance',
@@ -89,7 +89,7 @@ class App extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 100,
+                height: 60,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -115,16 +115,18 @@ class App extends StatelessWidget {
                 height: 20,
               ),
               Container(
+                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   color: const Color(0xFF1F2123),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 30,
+                    vertical: 20,
                     horizontal: 30,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,6 +164,17 @@ class App extends StatelessWidget {
                             ],
                           )
                         ],
+                      ),
+                      Transform.scale(
+                        scale: 2,
+                        child: Transform.translate(
+                          offset: const Offset(0, 12),
+                          child: const Icon(
+                            Icons.euro_rounded,
+                            color: Colors.white,
+                            size: 80,
+                          ),
+                        ),
                       ),
                     ],
                   ),
