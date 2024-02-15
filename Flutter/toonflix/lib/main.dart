@@ -13,7 +13,7 @@ class App extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           elevation: 10,
-          shadowColor: Colors.black,
+          shadowColor: Colors.deepPurple,
           title: Text('Hello Flutter!'),
         ),
         body: Center(
@@ -21,6 +21,5 @@ class App extends StatelessWidget {
         ),
       ),
     );
-    // return CupertinoApp()
   }
 }
