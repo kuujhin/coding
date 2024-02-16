@@ -112,15 +112,15 @@ const a5 = superPrint5<number>([1, 2, 3, 4]);
 const b5 = superPrint5(["a", "b", "c"]);
 const c5 = superPrint5([1, 2, true, false, "hello"]);
 
-type Player<E> = {
+type Player1<E> = {
   name: string;
   // extraInfo: any
   extraInfo: E;
 };
-// type NicoPlayer = Player<{ favFood: string }>;
+// type NicoPlayer = Player1<{ favFood: string }>;
 type NicoExtra = { favFood: string };
-type NicoPlayer = Player<NicoExtra>;
-// const nico: Player<{ favFood: string }> = {
+type NicoPlayer = Player1<NicoExtra>;
+// const nico: Player1<{ favFood: string }> = {
 const nico: NicoPlayer = {
   name: "nico",
   extraInfo: {
@@ -128,7 +128,7 @@ const nico: NicoPlayer = {
   },
 };
 
-const jhin: Player<null> = {
+const me: Player1<null> = {
   name: "jhin",
   extraInfo: null,
 };
