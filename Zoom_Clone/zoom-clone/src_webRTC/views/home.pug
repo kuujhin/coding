@@ -11,26 +11,15 @@ html(lang="en")
         main
             div#welcome
                 form
-                    input#roomName(type="text", placeholder="roomname", required, value="123")
-                    input#nickName(type="text", placeholder="nickname")
+                    input(type="text", placeholder="room name", required)
                     button Enter Room
-                h4 Open Rooms:
-                ul 
-            div#call(hidden="true")
+            div#call
                 div#myStream
                     video#myFace(autoplay, playsinline, width="400", heeight="400")
                     button#mic Mute
                     button#camera Turn Camera Off
                     select#cameras 
                 video#peerFace(autoplay, playsinline, width="400", heeight="400")
-                div#chatRoom
-                    h3
-                    ul
-                    form#msg
-                        input(placeholder="message", required, type="text")
-                        button Send
-                    div#left 
-                        button Left
 
         script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")

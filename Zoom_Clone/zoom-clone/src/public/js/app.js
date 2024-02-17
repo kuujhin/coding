@@ -1,26 +1,15 @@
 const socket = io();
 
-const myFace = document.getElementById("myFace");
-const micButton = document.getElementById("mic");
-const cameraButton = document.getElementById("camera");
-const camerasSelect = document.getElementById("cameras");
-
-const call = document.getElementById("call");
-
-call.hidden = true;
-
 let myStream;
-
-let micOff = false;
-let cameraOff = false;
-
-let roomName;
 
 /** @type {RTCPeerConnection} */
 let myPeerConnection;
 
-let myDataChannel;
+const chatRoom = document.getElementById("chatRoom");
 
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 연결된 카메라 선택 기능
+///////////////////////////////////////////////////////////////////////////
 async function getCameras() {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -39,6 +28,11 @@ async function getCameras() {
     console.log(error);
   }
 }
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 선택된 카메라 화면 보여줌
+///////////////////////////////////////////////////////////////////////////
+const myFace = document.getElementById("myFace");
 
 async function getMedia(deviceId) {
   const initialConstrains = {
@@ -60,6 +54,9 @@ async function getMedia(deviceId) {
   }
 }
 
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 마이크 On/Off 기능
+///////////////////////////////////////////////////////////////////////////
 function handleMicClick() {
   myStream.getAudioTracks().forEach((track) => {
     track.enabled = !track.enabled;
@@ -72,6 +69,13 @@ function handleMicClick() {
   micOff = !micOff;
 }
 
+let micOff = false;
+const micButton = document.getElementById("mic");
+micButton.addEventListener("click", handleMicClick);
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 카메라 On/Off 기능
+///////////////////////////////////////////////////////////////////////////
 function handleCameraClick() {
   myStream.getVideoTracks().forEach((track) => {
     track.enabled = !track.enabled;
@@ -84,7 +88,14 @@ function handleCameraClick() {
   cameraOff = !cameraOff;
 }
 
-async function handelCameraChange() {
+let cameraOff = false;
+const cameraButton = document.getElementById("camera");
+cameraButton.addEventListener("click", handleCameraClick);
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 카메라 선택
+///////////////////////////////////////////////////////////////////////////
+async function handleCameraChange() {
   await getMedia(camerasSelect.value);
   if (micOff) {
     myStream.getAudioTracks().forEach((track) => (track.enabled = false));
@@ -101,11 +112,17 @@ async function handelCameraChange() {
   }
 }
 
-cameraButton.addEventListener("click", handleCameraClick);
-micButton.addEventListener("click", handleMicClick);
-camerasSelect.addEventListener("input", handelCameraChange);
+const camerasSelect = document.getElementById("cameras");
+camerasSelect.addEventListener("input", handleCameraChange);
 
+///////////////////////////////////////////////////////////////////////////
+//////////////////// room 입장
+///////////////////////////////////////////////////////////////////////////
 //Welcome Form (join a room)
+const call = document.getElementById("call");
+// call.hidden = true;
+let roomName;
+let nickName = "Anon";
 
 const welcome = document.getElementById("welcome");
 const welcomeForm = welcome.querySelector("form");
@@ -117,24 +134,97 @@ async function initCall() {
   makeConnection();
 }
 
+function showRoomName(count) {
+  const h3 = chatRoom.querySelector("h3");
+  h3.innerText = `Room ${roomName} (${count})`;
+  console.log(roomName, count);
+}
+
 async function handleWelcomeSubmit(event) {
   event.preventDefault();
-  const input = welcomeForm.querySelector("input");
+  const roomInput = welcomeForm.querySelector("#roomName");
+  const nickInput = welcomeForm.querySelector("#nickName");
+
   await initCall();
-  socket.emit("join_room", input.value);
-  roomName = input.value;
-  input.value = "";
+  roomName = roomInput.value;
+  nickName = nickInput.value ? nickInput.value : "Anon";
+  socket.emit("join_room", roomName, nickName, showRoomName);
+  // socket.emit("join_room", roomName, nickName, showRoom);
+
+  // console.log(nickName);
+  roomInput.value = "";
+  nickInput.value = "";
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 
-// Socket Code
+///////////////////////////////////////////////////////////////////////////
+//////////////////// room 퇴장
+///////////////////////////////////////////////////////////////////////////
+const leftButton = chatRoom.querySelector("#left button");
 
-socket.on("welcome", async () => {
+function deleteRoom() {
+  const ul = chatRoom.querySelector("ul");
+  ul.innerHTML = "";
+}
+
+function handleRoomLeft() {
+  welcome.hidden = false;
+  call.hidden = true;
+  socket.emit("left_room", roomName, deleteRoom);
+}
+
+leftButton.addEventListener("click", handleRoomLeft);
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 메세지 생성
+///////////////////////////////////////////////////////////////////////////
+function createMessage(text) {
+  const ul = chatRoom.querySelector("ul");
+  const li = document.createElement("li");
+  li.innerText = text;
+  ul.appendChild(li);
+}
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 메세지 발신
+///////////////////////////////////////////////////////////////////////////
+function sendMessage(event) {
+  event.preventDefault();
+  const input = chatRoom.querySelector("#msg input");
+  const value = input.value;
+
+  myDataChannel.send(value);
+
+  createMessage(`You(${nickName}): ${value}`);
+
+  input.value = "";
+}
+
+const msgForm = chatRoom.querySelector("form");
+msgForm.addEventListener("submit", sendMessage);
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// 메세지 수신
+///////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////// 닉네임 보이게
+function getMessage(event) {
+  createMessage(`nickName: ${event.data}`);
+}
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// Socket Code
+///////////////////////////////////////////////////////////////////////////
+let myDataChannel;
+
+socket.on("welcome", async (user, newCount) => {
+  const h3 = chatRoom.querySelector("h3");
+  h3.innerText = `Room ${roomName} (${newCount})`;
+  createMessage(`${user} Joined!`);
+
   myDataChannel = myPeerConnection.createDataChannel("chat");
-  myDataChannel.addEventListener("message", (event) => {
-    console.log(event.data);
-  });
+  myDataChannel.addEventListener("message", getMessage);
+
   console.log("made data channel");
   const offer = await myPeerConnection.createOffer();
   myPeerConnection.setLocalDescription(offer);
@@ -145,9 +235,7 @@ socket.on("welcome", async () => {
 socket.on("offer", async (offer) => {
   myPeerConnection.addEventListener("datachannel", (event) => {
     myDataChannel = event.channel;
-    myDataChannel.addEventListener("message", (event) => {
-      console.log(event.data);
-    });
+    myDataChannel.addEventListener("message", getMessage);
   });
   console.log("receive the offer");
   myPeerConnection.setRemoteDescription(offer);
@@ -167,8 +255,29 @@ socket.on("ice", (ice) => {
   myPeerConnection.addIceCandidate(ice);
 });
 
-// RTC Code
+socket.on("room_change", ([rooms, size]) => {
+  const roomList = welcome.querySelector("ul");
+  roomList.innerHTML = "";
 
+  if (rooms.length === 0) {
+    return;
+  }
+  for (i = 0; i < rooms.length; i++) {
+    const li = document.createElement("li");
+    li.innerText = `${rooms[i]} (${size[i]})`;
+    roomList.append(li);
+  }
+});
+
+socket.on("bye", (user, newCount) => {
+  const h3 = chatRoom.querySelector("h3");
+  h3.innerText = `Room ${roomName} (${newCount})`;
+  createMessage(`${user} Left!`);
+});
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////// RTC Code
+///////////////////////////////////////////////////////////////////////////
 function makeConnection() {
   myPeerConnection = new RTCPeerConnection({
     iceServers: [
