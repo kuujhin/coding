@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/toonflix/models/webtoon_model.dart';
 import 'package:toonflix/toonflix/services/api_service.dart';
+import 'package:toonflix/toonflix/widgets/webtoon_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -11,7 +12,21 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: webtoonBar(),
+      appBar: AppBar(
+        title: const Text(
+          "오늘의 웹툰",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        centerTitle: true,
+        foregroundColor: Colors.green,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.black,
+        elevation: 3,
+      ),
       body: FutureBuilder(
         future: webtoons,
         builder: (context, snapshot) {
@@ -35,24 +50,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  AppBar webtoonBar() {
-    return AppBar(
-      title: const Text(
-        "오늘의 웹툰",
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      centerTitle: true,
-      foregroundColor: Colors.green,
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
-      shadowColor: Colors.black,
-      elevation: 3,
-    );
-  }
-
   ListView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
@@ -64,39 +61,10 @@ class HomeScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         // print(index);
         var webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 250,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: const Offset(10, 10),
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                  ]),
-              child: Image.network(
-                webtoon.thumb,
-                headers: const {
-                  'User-Agent':
-                      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-                  'Referer': 'https://comic.naver.com',
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              webtoon.title,
-              style: const TextStyle(
-                fontSize: 22,
-              ),
-            ),
-          ],
+        return Webtoon(
+          title: webtoon.title,
+          thumb: webtoon.thumb,
+          id: webtoon.id,
         );
       },
       separatorBuilder: (context, index) => const SizedBox(
