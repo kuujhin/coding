@@ -3,8 +3,8 @@ import 'package:toonflix/toonflix/models/webtoon_detail_model.dart';
 import 'package:toonflix/toonflix/models/webtoon_episode_model.dart';
 import 'package:toonflix/toonflix/services/api_service.dart';
 import 'package:toonflix/toonflix/widgets/episode_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher_string.dart';
 
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
@@ -125,7 +125,10 @@ class _DetailScreenState extends State<DetailScreen> {
                     return Column(
                       children: [
                         for (var episode in snapshot.data!)
-                          Episode(episode: episode),
+                          Episode(
+                            episode: episode,
+                            webtoonId: widget.id,
+                          ),
                       ],
                     );
                   }
